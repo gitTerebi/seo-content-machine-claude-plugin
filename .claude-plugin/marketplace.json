@@ -1,0 +1,17 @@
+{
+  "name": "seo-content-machine",
+  "owner": {
+    "name": "SEO Content Machine",
+    "url": "https://seocontentmachine.com"
+  },
+  "metadata": {
+    "description": "Official Claude Code plugins for SEO Content Machine."
+  },
+  "plugins": [
+    {
+      "name": "seo-content-machine",
+      "source": "./",
+      "description": "Plan SEO pages in an SEO Workspace and have SEO Content Machine research, write and review each one as a draft."
+    }
+  ]
+}
