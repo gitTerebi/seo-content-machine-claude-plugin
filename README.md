@@ -11,6 +11,22 @@ The user reviews and publishes the drafts in the SCM app.
 
 The plugin adds SCM's MCP server and two skills: `scm`, which shows Claude how to use the tools, and `local-seo`, which plans and writes local service pages for every service in every town a business covers.
 
+## How SCM writes each page
+
+Each page in a Page Pipeline gets its own page agent, run on the AI service the user set up in SCM. The agent follows a page skill: a SKILL.md file for that page type, which says what the page must cover and the form it takes. SCM ships page skills for 10 page types (Article, Topic Definition, Topic How To, Topic Guide, Topic Troubleshoot, Topic Comparison, Topic Listicle, Topic Review, Local SEO Service and Local SEO Hub), plus a refresh skill for pages already live. Users can add their own page skills as folders in SCM's skills folder.
+
+The page agent works through three sub-agents, each defined in its own agent file:
+
+1. **Research.** A page-researcher builds a SERP model of the reader's search: one entry for every first-page result in rank order, then a comparison of what they cover and miss. It reads each fact at the source that owns it and writes it to `facts.md`, and it lists the facts no source publishes as gaps. Facts about the business come only from the Workspace brief and the page's notes.
+2. **Writing.** A page-writer writes the page from the writing brief, the SERP model and the facts, in the form the page skill gives.
+3. **Review.** A page-reviewer searches what ranks, opens the pages behind the page's facts and links, and marks each fail as blocking or minor. A blocking fail is a claim no opened page states, a claim about the business the brief does not back, or skipped research. It scores the page out of 10 on Help, Specifics, Honest, Expertise and Focus. The writer makes the fixes and the same reviewer rescores, for up to 4 rounds, until no blocking fail is left and every score is 8 or more.
+
+Before a page is kept, SCM checks its HTML against the page skill's lint rules, such as the length of the H1. When a fix needs a fact only the business knows, the agent saves the question in the page's notes in the SEO Workspace for the user to answer, instead of guessing.
+
+The page agent and its sub-agents run in SCM's own agent engine, not in Claude Code. They work on any AI service in SCM that can call tools: a Claude Code or Codex subscription, an API key for OpenAI, Claude, Gemini, DeepSeek, Groq, OpenRouter, Z.ai or Azure, or a local model in LM Studio. Claude Code hands SCM the pages and reads the drafts back, so a batch of 50 pages does not fill its context.
+
+Each page keeps its own folder with its SERP model, facts, research log and review. A stopped run resumes where each page left off, and the run log records every page's review rounds, scores and token use.
+
 ## Requirements
 
 - SEO Content Machine running on the same machine, on Windows, Mac or Linux. SCM is a paid app with a [14-day free trial](https://seocontentmachine.com/members/signup/trial), no card needed.
