@@ -7,7 +7,7 @@
     "name": "SEO Content Machine",
     "url": "https://seocontentmachine.com"
   },
-  "homepage": "https://seocontentmachine.com",
+  "homepage": "https://seocontentmachine.com/?utm_source=claude-plugin&utm_medium=plugin&utm_campaign=claude-directory&utm_content=listing",
   "repository": "https://github.com/gitTerebi/seo-content-machine-claude-plugin",
   "license": "MIT",
   "keywords": [

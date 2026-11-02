@@ -1,6 +1,6 @@
 # SEO Content Machine plugin for Claude Code
 
-Lets Claude Code plan SEO pages with [SEO Content Machine](https://seocontentmachine.com) (SCM), the desktop SEO workspace, and have SCM write them:
+Lets Claude Code plan SEO pages with [SEO Content Machine](https://seocontentmachine.com/?utm_source=claude-plugin&utm_medium=plugin&utm_campaign=claude-directory&utm_content=readme) (SCM), the desktop SEO workspace, and have SCM write them:
 
 - plan pages in an SEO Workspace: the brief, the page list and the site plan of hubs and the pages under them
 - read the Workspace's pages, site plan and the Search Console data the user imported in the app
@@ -29,7 +29,7 @@ Each page keeps its own folder with its SERP model, facts, research log and revi
 
 ## Requirements
 
-- SEO Content Machine running on the same machine, on Windows, Mac or Linux. SCM is a paid app with a [14-day free trial](https://seocontentmachine.com/members/signup/trial), no card needed.
+- SEO Content Machine running on the same machine, on Windows, Mac or Linux. SCM is a paid app with a [14-day free trial](https://seocontentmachine.com/members/signup/trial?utm_source=claude-plugin&utm_medium=plugin&utm_campaign=claude-directory&utm_content=readme_trial), no card needed.
 - SCM's Api secret key (Settings > App) left blank, which is the default.
 - Node.js 18 or newer.
 
