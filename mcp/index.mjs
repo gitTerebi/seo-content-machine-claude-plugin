@@ -12,7 +12,6 @@
 //
 // Env:
 //   SCM_API_URL   base url of the SCM API server (default http://localhost:8008)
-//   SCM_API_KEY   sent as "Authorization: Bearer <key>" when the app has a key set
 //
 // If SCM is closed, the client still connects with no tools, and the tools appear when SCM
 // starts. Tool calls made while SCM is closed answer with an error saying to start it.
@@ -21,7 +20,6 @@ import {createInterface} from 'node:readline';
 
 const BASE = (process.env.SCM_API_URL || 'http://localhost:8008').replace(/\/+$/, '');
 const ENDPOINT = BASE + '/mcp';
-const API_KEY = process.env.SCM_API_KEY || '';
 
 // stderr, never stdout: stdout is the JSON-RPC channel and any stray byte corrupts it.
 const log = message => process.stderr.write(`[scm-mcp] ${message}\n`);
@@ -32,10 +30,7 @@ const send = message => process.stdout.write(message + '\n');
 
 const post = body => fetch(ENDPOINT, {
   method: 'POST',
-  headers: {
-    'content-type': 'application/json',
-    ...(API_KEY ? {authorization: `Bearer ${API_KEY}`} : {})
-  },
+  headers: {'content-type': 'application/json'},
   body
 });
 
