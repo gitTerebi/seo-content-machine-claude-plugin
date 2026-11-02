@@ -9,7 +9,7 @@ Lets Claude Code plan SEO pages with [SEO Content Machine](https://seocontentmac
 
 The user reviews and publishes the drafts in the SCM app.
 
-The plugin adds SCM's MCP server with those tools only, and two skills: `scm`, which shows Claude how to use the tools, and `local-seo`, which plans and writes local service pages for every service in every town a business covers.
+The plugin adds SCM's MCP server and two skills: `scm`, which shows Claude how to use the tools, and `local-seo`, which plans and writes local service pages for every service in every town a business covers.
 
 ## Requirements
 
@@ -55,11 +55,7 @@ The MCP server is one file, [mcp/index.mjs](mcp/index.mjs), with no dependencies
 
 While SCM is closed, the server checks that address every 5 seconds and tells Claude Code to list the tools again once SCM answers.
 
-The plugin starts the server with `SCM_TOOLSET=pages`, so it lists and accepts only the SEO Workspace, Page Pipeline and task tools. It refuses a call to any other SCM tool.
-
 The work itself runs inside SCM on your machine. A Page Pipeline researches each page's topic on the web, writes the page with the AI service the user set up in SCM, and saves the draft in the SEO Workspace.
-
-The same server is on npm as [seo-content-machine-mcp](https://www.npmjs.com/package/seo-content-machine-mcp) for other MCP clients.
 
 ## License
 

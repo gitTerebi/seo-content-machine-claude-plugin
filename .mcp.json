@@ -7,8 +7,7 @@
       ],
       "env": {
         "SCM_API_KEY": "${user_config.api_key}",
-        "SCM_API_URL": "${user_config.api_url}",
-        "SCM_TOOLSET": "pages"
+        "SCM_API_URL": "${user_config.api_url}"
       }
     }
   }

@@ -23,15 +23,6 @@ const BASE = (process.env.SCM_API_URL || 'http://localhost:8008').replace(/\/+$/
 const ENDPOINT = BASE + '/mcp';
 const API_KEY = process.env.SCM_API_KEY || '';
 
-const TOOLSETS = {
-  pages: new Set([
-    'task_list', 'task_get', 'task_results', 'task_run', 'task_cancel', 'task_delete',
-    'seo_workspace_create', 'workspace_query', 'workspace_write', 'workspace_create_pages', 'workspace_documents_edit',
-    'page_pipeline_upsert'
-  ])
-};
-const ALLOWED = TOOLSETS[(process.env.SCM_TOOLSET || '').trim().toLowerCase()] || null;
-
 // stderr, never stdout: stdout is the JSON-RPC channel and any stray byte corrupts it.
 const log = message => process.stderr.write(`[scm-mcp] ${message}\n`);
 
@@ -74,16 +65,6 @@ function waitForApp() {
   poll.unref();
 }
 
-function onlyAllowedTools(text) {
-  try {
-    const reply = JSON.parse(text);
-    if (Array.isArray(reply.result?.tools)) reply.result.tools = reply.result.tools.filter(tool => ALLOWED.has(tool.name));
-    return JSON.stringify(reply);
-  } catch {
-    return text;
-  }
-}
-
 function withListChanged(text) {
   try {
     const reply = JSON.parse(text);
@@ -107,10 +88,6 @@ async function forward(line) {
   const method = Array.isArray(parsed) ? null : parsed.method;
   const isNotification = !Array.isArray(parsed) && (id === undefined || id === null);
 
-  if (ALLOWED && method === 'tools/call' && !ALLOWED.has(parsed.params?.name)) {
-    return rpcError(id, -32602, `Tool ${parsed.params?.name} is not available in this plugin`);
-  }
-
   try {
     const res = await post(line);
 
@@ -121,9 +98,7 @@ async function forward(line) {
     if (!res.ok && !text.startsWith('{')) {
       return isNotification ? null : rpcError(id, -32603, `SCM API returned HTTP ${res.status}`);
     }
-    if (method === 'initialize') return withListChanged(text);
-    if (ALLOWED && method === 'tools/list') return onlyAllowedTools(text);
-    return text || null;
+    return method === 'initialize' ? withListChanged(text) : text || null;
   } catch (error) {
     if (isRefused(error) && method === 'initialize') return rpcResult(id, OFFLINE_INIT);
     if (isRefused(error) && method === 'tools/list') {
