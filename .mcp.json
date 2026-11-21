@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "scm": {
-      "type": "http",
-      "url": "http://localhost:8008/mcp"
-    }
-  }
-}

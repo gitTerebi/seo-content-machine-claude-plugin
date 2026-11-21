@@ -11,6 +11,12 @@ SEO Content Machine (SCM) is a desktop app. Its MCP tools plan pages in an SEO W
 
 The app must be open. If no SCM tools are available, or a tool call fails because SCM cannot be reached, ask the user to start SEO Content Machine and log in, then run `/mcp` and reconnect the `scm` server. Do not retry in a loop.
 
+If `/mcp` lists no `scm` server, SCM's MCP server is not connected yet. Ask the user to run this once in a terminal and then restart Claude Code:
+
+```
+claude mcp add --transport http --scope user scm http://localhost:8008/mcp
+```
+
 Call `task_list` first in a new session. It shows the tasks that already exist and how busy the machine is.
 
 ## How a task runs

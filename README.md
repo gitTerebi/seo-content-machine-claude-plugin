@@ -9,7 +9,7 @@ Lets Claude Code plan SEO pages with [SEO Content Machine](https://seocontentmac
 
 The user reviews and publishes the drafts in the SCM app.
 
-The plugin adds SCM's MCP server and two skills: `scm`, which shows Claude how to use the tools, and `local-seo`, which plans and writes local service pages for every service in every town a business covers.
+The plugin adds two skills: `scm`, which shows Claude how to use SCM's MCP tools, and `local-seo`, which plans and writes local service pages for every service in every town a business covers. You connect SCM's MCP server to Claude Code once, with the command under Install.
 
 ## How SCM writes each page
 
@@ -49,7 +49,13 @@ Claude Code shows the source and asks once before it adds the marketplace. On Cl
 
 From a terminal, the same install is `claude plugin install seo-content-machine --marketplace gitTerebi/seo-content-machine-claude-plugin`.
 
-The plugin works with SCM's default settings, where SCM's API listens at `http://localhost:8008`.
+Then connect SCM's MCP server once, from a terminal:
+
+```
+claude mcp add --transport http --scope user scm http://localhost:8008/mcp
+```
+
+This uses SCM's default settings, where SCM's API listens at `http://localhost:8008`.
 
 Open SCM before Claude Code. If Claude Code started first, run `/mcp` and reconnect the `scm` server once SCM is open.
 
@@ -64,7 +70,7 @@ Open SCM, then ask Claude Code for the job, for example:
 
 ## What the plugin runs and sends
 
-The plugin runs no program on your machine. Its [.mcp.json](.mcp.json) points Claude Code at SCM's own MCP server, which SCM serves at `http://localhost:8008/mcp` while it is open. Claude Code sends its MCP requests there and to nothing else.
+The plugin holds only skills and runs no program on your machine. The `claude mcp add` command under Install points Claude Code at SCM's own MCP server, which SCM serves at `http://localhost:8008/mcp` while it is open. Claude Code sends its MCP requests there and to nothing else.
 
 The work itself runs inside SCM on your machine. A Page Pipeline researches each page's topic on the web, writes the page with the AI service the user set up in SCM, and saves the draft in the SEO Workspace.
 
